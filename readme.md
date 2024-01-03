@@ -9,8 +9,8 @@
     - [ ] Collisions with various entities
 * Map file loading
     - [x] Map stored as JSON
-    - [ ] Load map from file
-    - [ ] Create simple map editor
+    - [x] Load map from file
+    - [x] Create simple map editor
 * Enemies
     - [ ] Bouncer enemies
 * Items
