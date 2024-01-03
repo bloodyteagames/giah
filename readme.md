@@ -6,17 +6,17 @@
 ## TODO:
 * Player class
     - [x] Movement stop when hitting wall
-    - [] Collisions with various entities
+    - [ ] Collisions with various entities
 * Map file loading
     - [x] Map stored as JSON
-    - [] Load map from file
-    - [] Create simple map editor
+    - [ ] Load map from file
+    - [ ] Create simple map editor
 * Enemies
-    - [] Bouncer enemies
+    - [ ] Bouncer enemies
 * Items
-    - [] Coins
+    - [ ] Coins
 * SFX
-    - [] Bounce sound
-    - [] Hit wall sound
-    - [] Coin collect
-    - [] Basic BG music
+    - [ ] Bounce sound
+    - [ ] Hit wall sound
+    - [ ] Coin collect
+    - [ ] Basic BG music
