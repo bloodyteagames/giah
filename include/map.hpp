@@ -2,11 +2,6 @@
 #include <string>
 #include <vector>
 
-struct Tile {
-  int index;
-  bool isSolid;
-};
-
 class Map {
 public:
   Map();
@@ -27,7 +22,6 @@ public:
 
 private:
   enum TILES { WALL, WALL_V, FLOOR, FLOOR_V };
-  // Tile m_data[30 * 17];
   std::vector<int> m_sprites;
   std::vector<bool> m_solids;
 };

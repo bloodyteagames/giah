@@ -11,6 +11,7 @@
     - [x] Map stored as JSON
     - [x] Load map from file
     - [x] Create simple map editor
+    - [ ] Allow editing different files
 * Enemies
     - [ ] Bouncer enemies
 * Items
@@ -20,3 +21,6 @@
     - [ ] Hit wall sound
     - [ ] Coin collect
     - [ ] Basic BG music
+
+## Resources
+ - Sol's IMGUI article - https://solhsa.com/imgui/

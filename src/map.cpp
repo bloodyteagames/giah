@@ -13,6 +13,7 @@
 // BUG:
 // - Map save file accessing memory outside of array(??)
 // - Segfault when loading files, possibly due to save file corrution
+
 Map::Map() {
   m_sprites.reserve(30 * 17);
   m_solids.reserve(30 * 17);
@@ -25,7 +26,6 @@ Map::Map() {
         SetTile(x, y, 2, false);
     }
   }
-  SetTile(1, 2, 0, true);
 }
 
 Map::~Map() {}

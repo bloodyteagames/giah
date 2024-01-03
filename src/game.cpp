@@ -1,6 +1,8 @@
 #include "assets.hpp"
 #include "common.hpp"
 #include "core.hpp"
+#include "editor.hpp"
+#include "gui.hpp"
 #include "map.hpp"
 #include "player.hpp"
 #include <raylib.h>
@@ -8,51 +10,11 @@
 
 static Map map;
 static Player player;
+static bool tileEditMode = false;
+
+static TilePicker picker;
 
 bool debug = false;
-
-class DebugUI {
-public:
-  Map *map;
-
-private:
-  bool m_showTilePicker = false;
-  bool m_tileMode = false;
-
-public:
-  void Update() {
-    if (IsKeyPressed(KEY_T)) {
-      m_tileMode = !m_tileMode;
-    }
-
-    if (m_tileMode) {
-      if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-        map->SetTile(GetMouseX() / 8, GetMouseY() / 8, 0, true);
-      } else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-        map->SetTile(GetMouseX() / 8, GetMouseY() / 8, 2, false);
-      }
-
-      if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_S)) {
-        map->SaveToFile("test");
-      }
-
-      if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_O)) {
-        map->LoadFromFile("test");
-      }
-    }
-  }
-
-  void Draw() {
-    if (m_showTilePicker) {
-      DrawRectangle(2, 2, 68, 12, Color({15, 15, 15, 200}));
-      DrawRectangleLines(2, 2, 68, 12, WHITE);
-    } else if (m_tileMode) {
-      DrawTextureRec(Assets::get().GetTexture("tiles"), Rectangle({0, 0, 8, 8}),
-                     Vector2Multiply(GetMousePosition(), Vector2({8, 8})),
-                     WHITE);
-    }
-  }
-} debugUI;
 
 void INIT() {
   Assets::get().AddTexture("player", "res/images/player.png");
@@ -60,19 +22,12 @@ void INIT() {
 
   SetTraceLogLevel(LOG_ALL);
 
-  debugUI.map = &map;
   player.pos = Vector2({32, 32});
-
-  map.LoadFromFile("test");
 }
 
 void UPDATE() {
   if (IsKeyPressed(KEY_F1)) {
     debug = !debug;
-  }
-
-  if (debug) {
-    debugUI.Update();
   }
 
   player.Update(map);
@@ -85,7 +40,20 @@ void DRAW() {
   player.Draw();
 
   if (debug) {
-    debugUI.Draw();
+    if (IsKeyPressed(KEY_T))
+      tileEditMode = !tileEditMode;
+
+    if (tileEditMode) {
+      picker.Draw();
+    } else {
+      if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+        map.SetTile(GetMouseX() / 8, GetMouseY() / 8, picker.currentTile,
+                    picker.SOLIDS[picker.currentTile]);
+      } else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+        map.SetTile(GetMouseX() / 8, GetMouseY() / 8, 2, false);
+      }
+    }
+    DrawRectangleLines(GetMouseX() / 8 * 8, GetMouseY() / 8 * 8, 8, 8, WHITE);
   }
 }
 
