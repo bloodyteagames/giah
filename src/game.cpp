@@ -1,8 +1,10 @@
-#include "assets.hpp" #include "common.hpp"
+#include "assets.hpp"
+#include "common.hpp"
 #include "core.hpp"
 #include "map.hpp"
 #include "player.hpp"
 #include <raylib.h>
+#include <raymath.h>
 
 static Map map;
 static Player player;
@@ -31,11 +33,11 @@ public:
       }
 
       if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_S)) {
-        map->SaveToFile("res/data/test.json");
+        map->SaveToFile("test");
       }
 
       if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_O)) {
-        map->LoadFromFile("res/data/test.json");
+        map->LoadFromFile("test");
       }
     }
   }
@@ -45,9 +47,9 @@ public:
       DrawRectangle(2, 2, 68, 12, Color({15, 15, 15, 200}));
       DrawRectangleLines(2, 2, 68, 12, WHITE);
     } else if (m_tileMode) {
-      DrawTextureRec(
-          Assets::get().GetTexture("tiles"), Rectangle({0, 0, 8, 8}),
-          Vector2({((GetMouseX() / 8) * 8), ((GetMouseY() / 8) * 8)}), WHITE);
+      DrawTextureRec(Assets::get().GetTexture("tiles"), Rectangle({0, 0, 8, 8}),
+                     Vector2Multiply(GetMousePosition(), Vector2({8, 8})),
+                     WHITE);
     }
   }
 } debugUI;
@@ -56,10 +58,12 @@ void INIT() {
   Assets::get().AddTexture("player", "res/images/player.png");
   Assets::get().AddTexture("tiles", "res/images/tiles.png");
 
+  SetTraceLogLevel(LOG_ALL);
+
   debugUI.map = &map;
   player.pos = Vector2({32, 32});
 
-  // map.LoadFromFile("res/data/test.json");
+  map.LoadFromFile("test");
 }
 
 void UPDATE() {

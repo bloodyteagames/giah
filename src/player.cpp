@@ -22,8 +22,8 @@ void Player::Update(Map &map) {
   }
 
   // Horizontal collisions
-  if (map.GetTile(pos.x + vel.x, pos.y).isSolid ||
-      map.GetTile(pos.x + 7 + vel.x, pos.y).isSolid) {
+  if (map.GetSolid((pos.x + vel.x) / 8, pos.y / 8) ||
+      map.GetSolid((pos.x + 7 + vel.x) / 8, pos.y / 8)) {
     vel.x = 0;
     m_frame = IDLE;
     m_canMove = true;
@@ -31,8 +31,8 @@ void Player::Update(Map &map) {
   pos.x += vel.x;
 
   // Vertical collisions
-  if (map.GetTile(pos.x, pos.y + vel.y).isSolid ||
-      map.GetTile(pos.x, pos.y + 7 + vel.y).isSolid) {
+  if (map.GetSolid(pos.x / 8, (pos.y + vel.y) / 8) ||
+      map.GetSolid(pos.x / 8, (pos.y + 7 + vel.y) / 8)) {
     vel.y = 0;
     m_frame = IDLE;
     m_canMove = true;
