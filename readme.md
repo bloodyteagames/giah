@@ -1,7 +1,7 @@
 # GIAH: A Bard's Tale
 ---
 ## Synopsis
-> Gather coins and avoid monsters in the frantic dash to escape the lair of the evil Necromancer!
+> Gather coins and avoid monsters in this frantic dash to escape the lair of the evil Necromancer!
 
 ## TODO:
 * Player class
