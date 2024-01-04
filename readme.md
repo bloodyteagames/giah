@@ -11,6 +11,8 @@
     - [x] Map stored as JSON
     - [x] Load map from file
     - [x] Create simple map editor
+    - [ ] Add buttons for tiles in tilepicker
+    - [ ] Create save dialog
     - [ ] Allow editing different files
 * Enemies
     - [ ] Bouncer enemies

@@ -1,10 +1,14 @@
 SRC = src/*.cpp
 CFLAGS = -std=c++20 -Wall -Wextra -pedantic -ggdb -O0
-INC = -Iinclude/
 NAME = giah
 OUT = $(NAME)
 
 RAYLIB = lib/raylib/src
+RAYGUI = lib/raygui/src
+
+INC = -Iinclude/
+INC += -I$(RAYLIB)
+INC += -I$(RAYGUI)
 
 LIB = -L$(RAYLIB)
 

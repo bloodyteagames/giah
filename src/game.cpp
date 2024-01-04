@@ -2,26 +2,30 @@
 #include "common.hpp"
 #include "core.hpp"
 #include "editor.hpp"
-#include "gui.hpp"
 #include "map.hpp"
 #include "player.hpp"
 #include <raylib.h>
 #include <raymath.h>
 
+#define RAYGUI_IMPLEMENTATION
+#include <raygui.h>
+#undef RAYGUI_IMPLEMENTATION
+
 static Map map;
 static Player player;
-static bool tileEditMode = false;
-
-static TilePicker picker;
 
 bool debug = false;
+
+TilePicker picker;
+int showPicker = 0;
 
 void INIT() {
   Assets::get().AddTexture("player", "res/images/player.png");
   Assets::get().AddTexture("tiles", "res/images/tiles.png");
-
   SetTraceLogLevel(LOG_ALL);
+  GuiLoadStyle("res/styles/style_dark.rgs");
 
+  picker.map = &map;
   player.pos = Vector2({32, 32});
 }
 
@@ -30,7 +34,12 @@ void UPDATE() {
     debug = !debug;
   }
 
-  player.Update(map);
+  if (debug) {
+    picker.Update();
+  }
+
+  if (picker.show)
+    player.Update(map);
 }
 
 void DRAW() {
@@ -40,20 +49,8 @@ void DRAW() {
   player.Draw();
 
   if (debug) {
-    if (IsKeyPressed(KEY_T))
-      tileEditMode = !tileEditMode;
-
-    if (tileEditMode) {
-      picker.Draw();
-    } else {
-      if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-        map.SetTile(GetMouseX() / 8, GetMouseY() / 8, picker.currentTile,
-                    picker.SOLIDS[picker.currentTile]);
-      } else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-        map.SetTile(GetMouseX() / 8, GetMouseY() / 8, 2, false);
-      }
-    }
     DrawRectangleLines(GetMouseX() / 8 * 8, GetMouseY() / 8 * 8, 8, 8, WHITE);
+    picker.Draw();
   }
 }
 
