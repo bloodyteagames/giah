@@ -1,16 +1,13 @@
 #pragma once
 
+#include "entities/entity.hpp"
 #include "map.hpp"
 #include <raylib.h>
 
-class Player {
+class Player : public Entity {
 public:
-  Vector2 pos;
-  Vector2 vel;
-
   void Update(Map &map);
-
-  void Draw();
+  void Draw() override;
 
 private:
   enum FRAMES { IDLE, RUN_RIGHT, RUN_LEFT };

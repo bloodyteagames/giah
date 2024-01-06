@@ -56,7 +56,7 @@ void Map::LoadFromFile(std::string path) {
       CreateCoin(ent["x"], ent["y"]);
     if (ent["name"] == "Bouncer")
       CreateBouncer(
-          ent["x"], ent["y"],
+          ent["id"], ent["x"], ent["y"],
           Vector2({ent["values"]["hSpeed"], ent["values"]["vSpeed"]}));
   }
 }

@@ -1,5 +1,6 @@
-#include "player.hpp"
+#include "entities/player.hpp"
 #include "assets.hpp"
+#include "map.hpp"
 #include "raylib.h"
 
 void Player::Update(Map &map) {

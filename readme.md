@@ -10,12 +10,8 @@
 * Map file loading
     - [x] Map stored as JSON
     - [x] Load map from file
-    - [x] Create simple map editor
-    - [ ] Add buttons for tiles in tilepicker
-    - [ ] Create save dialog
-    - [ ] Allow editing different files
 * Enemies
-    - [ ] Bouncer enemies
+    - [x] Bouncer enemies
 * Items
     - [ ] Coins
 * SFX
@@ -23,6 +19,8 @@
     - [ ] Hit wall sound
     - [ ] Coin collect
     - [ ] Basic BG music
+* Misc
+    - [ ] Figure out font drawing filtering issues
 
 ## Resources
- - Sol's IMGUI article - https://solhsa.com/imgui/
+ - Bitty Font: https://masharcade.itch.io/bitty

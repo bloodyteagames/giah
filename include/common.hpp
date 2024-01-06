@@ -10,4 +10,4 @@ extern bool debug;
 void ResetLevel();
 void CreatePlayer(int x, int y);
 void CreateCoin(int x, int y);
-void CreateBouncer(int x, int y, Vector2 vel);
+void CreateBouncer(int id, int x, int y, Vector2 vel);

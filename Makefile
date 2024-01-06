@@ -6,7 +6,7 @@ OUT = $(NAME)
 RAYLIB = lib/raylib/src
 
 INC = -Iinclude/
-INC += -I$(RAYLIB)
+# INC += -I$(RAYLIB)
 
 LIB = -L$(RAYLIB)
 

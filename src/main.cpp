@@ -9,12 +9,12 @@ int main(void) {
   SetWindowMinSize(WIDTH, HEIGHT);
 
   // ToggleBorderlessWindowed();
-  SetWindowState(FLAG_WINDOW_MAXIMIZED);
 
   RenderTexture2D target = LoadRenderTexture(240, 136);
   SetTextureFilter(target.texture, TEXTURE_FILTER_POINT);
 
   INIT();
+  SetWindowState(FLAG_WINDOW_MAXIMIZED);
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
