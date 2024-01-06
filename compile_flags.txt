@@ -1,4 +1,3 @@
 -Iinclude/
 -Ilib/raylib/src/
--Ilib/raygui/src/
 -Iinclude/nlohmann/

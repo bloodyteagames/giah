@@ -6,14 +6,6 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-// TODO:
-// - Load map from file
-// - Create simple editor
-
-// BUG:
-// - Map save file accessing memory outside of array(??)
-// - Segfault when loading files, possibly due to save file corrution
-
 Map::Map() {
   m_sprites.reserve(30 * 17);
   m_solids.reserve(30 * 17);
@@ -21,7 +13,7 @@ Map::Map() {
   for (int y = 0; y < 17; y++) {
     for (int x = 0; x < 30; x++) {
       if (x == 0 || x == 29 || y == 0 || y == 16)
-        SetTile(x, y, 0, true);
+        SetTile(x, y, 1, true);
       else
         SetTile(x, y, 2, false);
     }
@@ -37,37 +29,35 @@ void Map::SetTile(int x, int y, int index, bool solid) {
   SetSolid(x, y, solid);
 }
 
-void Map::SaveToFile(std::string path) {
-  std::fstream fs;
-  fs.open("res/data/" + path + ".json",
-          std::fstream::out | std::fstream::trunc);
-  nlohmann::json map_data;
-
-  for (int i = 0; i < (30 * 17); i++) {
-    map_data["sprites"][i] = m_sprites[i];
-    map_data["solids"][i] = m_solids[i];
-  }
-
-  fs << std::setw(4) << map_data;
-  TraceLog(LOG_DEBUG, TextFormat("Saving map to file :'%s'", path.c_str()));
-  fs.close();
-}
-
 void Map::LoadFromFile(std::string path) {
   std::fstream fs;
-  fs.open("res/data/" + path + ".json");
+  fs.open("res/data/levels/" + path + ".json");
   if (!fs.is_open()) {
-    TraceLog(LOG_ERROR, TextFormat("Failed to load file '%s'",
-                                   ("res/data/" + path + ".json").c_str()));
+    TraceLog(LOG_ERROR,
+             TextFormat("Failed to load file '%s'",
+                        ("res/data/levels/" + path + ".json").c_str()));
     return;
   }
 
   nlohmann::json map_data = nlohmann::json::parse(fs);
   fs.close();
 
-  for (int i = 0; i < (30 * 17); i++) {
-    m_sprites[i] = map_data["sprites"][i];
-    m_solids[i] = map_data["solids"][i];
+  ResetLevel();
+
+  for (int idx = 0; idx < 30 * 17; idx++) {
+    m_solids[idx] = map_data["layers"][2]["data"][idx];
+    m_sprites[idx] = map_data["layers"][1]["data"][idx];
+
+    auto &ent = map_data["layers"][0]["entities"][idx];
+
+    if (ent["name"] == "Player")
+      CreatePlayer(ent["x"], ent["y"]);
+    if (ent["name"] == "Coin")
+      CreateCoin(ent["x"], ent["y"]);
+    if (ent["name"] == "Bouncer")
+      CreateBouncer(
+          ent["x"], ent["y"],
+          Vector2({ent["values"]["hSpeed"], ent["values"]["vSpeed"]}));
   }
 }
 

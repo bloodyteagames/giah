@@ -4,11 +4,9 @@ NAME = giah
 OUT = $(NAME)
 
 RAYLIB = lib/raylib/src
-RAYGUI = lib/raygui/src
 
 INC = -Iinclude/
 INC += -I$(RAYLIB)
-INC += -I$(RAYGUI)
 
 LIB = -L$(RAYLIB)
 
